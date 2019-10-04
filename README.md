@@ -1,6 +1,6 @@
 # gists-bkp
 
-A Clojure library designed to backup my gists.
+A Clojure library designed to backup Github gists.
 
 ## Usage
 
