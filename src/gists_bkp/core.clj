@@ -12,10 +12,12 @@
 (def gists_url "https://api.github.com/users/medeiros/gists")
 
 (defn get-gists-pull-url
-  "Iterate through all public gists"
+  "Iterate through all public gists.
+   At this poing, this method is just printing the gists urls.
+   It will be improved to back up code related to those urls."
   []
   (let [lseq (parse-string (:body (client/get gists_url)) 
-                          (fn [x] (= x "git_pull_url")))]
+                          #(= % "git_pull_url"))]
     (loop [item (first lseq), sublist (rest lseq)]
       (when item
         (println (val (last item)))
