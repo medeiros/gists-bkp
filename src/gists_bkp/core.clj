@@ -1,6 +1,7 @@
 (ns gists-bkp.core
   (:require [clj-http.client :as client]
-            [cheshire.core :refer :all]))
+            [cheshire.core :refer :all]
+            [clj-jgit.porcelain :as jgit]))
 
 
 (defn foo
@@ -20,7 +21,10 @@
                           #(= % "git_pull_url"))]
     (loop [item (first lseq), sublist (rest lseq)]
       (when item
-        (println (val (last item)))
+        (let [url (val (last item))
+              file (subs url (inc (clojure.string/last-index-of url "/")))]
+          (println (str "cloning " url " (file: " file ") ..."))
+          (jgit/git-clone url :dir (str "gist-clones/" file)))
         (recur (first sublist) (rest sublist))))))
 
 
