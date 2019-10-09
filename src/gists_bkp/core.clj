@@ -12,6 +12,11 @@
 
 (def gists_url "https://api.github.com/users/medeiros/gists")
 
+(defn get-file-from-uri
+  "Get a file part from a uri."
+  [uri]
+  (subs uri (inc (clojure.string/last-index-of uri "/"))))
+
 (defn get-gists-pull-url
   "Iterate through all public gists and clone those repos.
    It would be better to split this in several more specialized functions."
@@ -21,9 +26,10 @@
     (loop [item (first lseq), sublist (rest lseq)]
       (when item
         (let [url (val (last item))
-              file (subs url (inc (clojure.string/last-index-of url "/")))]
+              file (get-file-from-uri url)]
           (println (str "cloning " url " (file: " file ") ..."))
           (jgit/git-clone url :dir (str "gist-clones/" file)))
         (recur (first sublist) (rest sublist))))))
+
 
 
