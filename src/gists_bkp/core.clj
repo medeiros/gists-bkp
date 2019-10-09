@@ -4,12 +4,6 @@
             [clj-jgit.porcelain :as jgit]))
 
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
-
-
 (def gists_url "https://api.github.com/users/medeiros/gists")
 
 
