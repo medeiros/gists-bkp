@@ -12,10 +12,18 @@
 
 (def gists_url "https://api.github.com/users/medeiros/gists")
 
+
 (defn get-file-from-uri
   "Get a file part from a uri."
   [uri]
   (subs uri (inc (clojure.string/last-index-of uri "/"))))
+
+
+(defn clone-message
+  "Returns cloning action message."
+  [url file]
+  (str "cloning " url " (file: " file ") ..."))
+
 
 (defn get-gists-pull-url
   "Iterate through all public gists and clone those repos.
@@ -27,7 +35,7 @@
       (when item
         (let [url (val (last item))
               file (get-file-from-uri url)]
-          (println (str "cloning " url " (file: " file ") ..."))
+          (println (clone-message url file))
           (jgit/git-clone url :dir (str "gist-clones/" file)))
         (recur (first sublist) (rest sublist))))))
 
