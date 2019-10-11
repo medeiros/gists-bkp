@@ -9,7 +9,16 @@ A Clojure library designed to backup Github gists.
 
 ## Usage
 
-FIXME
+In the repl:
+
+	$ lein repl
+	user=> (use 'gists-bkp.core)
+	user=> (get-gists-pull-url) ; data will be saved into 'gist-clones' dir
+
+To run unit tests:
+
+	$ lein test
+
 
 ## License
 
